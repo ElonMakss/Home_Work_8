@@ -4,8 +4,8 @@ import com.geektech.players.*;
 
 public class InfinityWar {
 
-    public static void startBattle(){
-        Boss thanos = new Boss(1000, 50,
+    public static void startBattle() {
+        Boss thanos = new Boss(10000, 300,
                 "Thanos");
 
         CaptainAmerica captainAmerica = new CaptainAmerica(
@@ -26,71 +26,78 @@ public class InfinityWar {
 
         Medic assistant = new Medic(
                 240, 5, "Assistant",
-                EnumSuperAbility.TO_HEAL,10);
-        DrStrendge dr = new DrStrendge(230, 30, "Dr Strandge", EnumSuperAbility.UP_DAMAGE);
+                EnumSuperAbility.TO_HEAL, 10);
+        DrStrendge dr = new DrStrendge(230, 30,
+                "Dr Strandge", EnumSuperAbility.UP_DAMAGE);
+        Thor thor = new Thor(300, 20,
+                "Thor", EnumSuperAbility.THOR);
+        Tank tank = new Tank(500, 5,
+                "Tank", EnumSuperAbility.TANK);
+        Witcher witcher = new Witcher(1000, 0,
+                "Witcher", EnumSuperAbility.WITCHER);
 
         Hero[] avengers = {captainAmerica, ironMan,
-                hulk, doc, assistant, dr};
+                hulk, doc, assistant, dr, thor, tank, witcher};
 
         System.out.println("_____THE INFINITY WAR IS STARTED_____");
         printStatistics(thanos, avengers);
 
-        while (!isGameFinished(thanos, avengers)){
+        while (!isGameFinished(thanos, avengers)) {
             round(thanos, avengers);
         }
     }
 
-    private static void round(Boss thanos, Hero[] avengers){
+    private static void round(Boss thanos, Hero[] avengers) {
         bossDamage(thanos, avengers);
         avengersDamage(thanos, avengers);
         applySuperAbility(thanos, avengers);
         printStatistics(thanos, avengers);
     }
 
-    private static boolean isGameFinished(Boss boss, Hero[] avengers){
-        if (boss.getHealth() <= 0){
+    private static boolean isGameFinished(Boss boss, Hero[] avengers) {
+        if (boss.getHealth() <= 0) {
             System.out.println("Avengers won!!!");
             return true;
         }
 
         boolean allAvengersDead = true;
         for (int i = 0; i < avengers.length; i++) {
-            if (avengers[i].getHealth() > 0){
+            if (avengers[i].getHealth() > 0) {
                 allAvengersDead = false;
                 break;
             }
         }
-        if (allAvengersDead){
+        if (allAvengersDead) {
             System.out.println("Thanos Won!!!");
         }
         return allAvengersDead;
     }
 
-    private static void avengersDamage(Boss boss, Hero[] avengers){
+    private static void avengersDamage(Boss boss, Hero[] avengers) {
         for (int i = 0; i < avengers.length; i++) {
-            if (boss.getHealth() > 0 && avengers[i].getHealth() > 0){
+            if (boss.getHealth() > 0 && avengers[i].getHealth() > 0) {
                 boss.setHealth(boss.getHealth() - avengers[i].getDamage());
             }
         }
     }
 
-    private static void applySuperAbility(Boss boss, Hero[] avengers){
+    private static void applySuperAbility(Boss boss, Hero[] avengers) {
         for (int i = 0; i < avengers.length; i++) {
-            if (boss.getHealth() > 0 && avengers[i].getHealth() > 0){
+            if (boss.getHealth() > 0 && avengers[i].getHealth() > 0) {
                 avengers[i].applySuperAbility(boss, avengers);
             }
         }
     }
 
-    private static void bossDamage(Boss boss, Hero[] avengers){
+    private static void bossDamage(Boss boss, Hero[] avengers) {
         for (int i = 0; i < avengers.length; i++) {
-            if (boss.getHealth() > 0 && avengers[i].getHealth() > 0){
+            if (boss.getHealth() > 0 && avengers[i].getHealth() > 0) {
                 avengers[i].setHealth(avengers[i].getHealth() - boss.getDamage());
             }
         }
     }
 
-    public static void printStatistics(Boss boss, Hero[] avengers){
+    public static void printStatistics(Boss boss, Hero[] avengers) {
         System.out.println(boss.getName() + " : " +
                 boss.getHealth() + " damage " +
                 boss.getDamage());
