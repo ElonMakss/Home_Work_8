@@ -5,7 +5,7 @@ import com.geektech.players.*;
 public class InfinityWar {
 
     public static void startBattle() {
-        Boss thanos = new Boss(10000, 300,
+        Boss thanos = new Boss(10000, 100,
                 "Thanos");
 
         CaptainAmerica captainAmerica = new CaptainAmerica(
